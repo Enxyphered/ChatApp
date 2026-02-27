@@ -1,0 +1,20 @@
+@inherits RazorLayoutSlice<LayoutModel>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@Model.Title</title>
+    <link rel="stylesheet" href="/css/site.css" />
+    @await RenderSectionAsync(sectionName: "head")
+</head>
+<body class="dark bg-gray-900 text-white" hx-ext="signalr">
+    <main>
+        @await RenderBodyAsync()
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@10.0.0/dist/browser/signalr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/Renerick/htmx-signalr@master/hx-signalr.js"></script>
+</body>
+</html>

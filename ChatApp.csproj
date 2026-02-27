@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ChatApp</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
+    <PackageReference Include="RazorSlices" Version="0.9.5" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+    <AotOnBuildRuntime>win-x64</AotOnBuildRuntime>
+    <AotOnBuild>true</AotOnBuild>
+  </PropertyGroup>
+  
+  <Target Name="AotPublishOnBuild" AfterTargets="Build" Condition="'$(AotOnBuild)' == 'true' and '$(AotPublishInvoked)' != 'true'">
+    <MSBuild Projects="$(MSBuildProjectFile)" Targets="Publish" Properties="AotPublishInvoked=true;RuntimeIdentifier=$(AotOnBuildRuntime);PublishAot=true;SelfContained=true;Configuration=$(Configuration)" />
+  </Target>
+
+  <Target Name="BuildTailwind" BeforeTargets="Build;Publish">
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="NodeExit" />
+    </Exec>
+    <Exec Command="npm --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="NpmExit" />
+    </Exec>
+    <PropertyGroup>
+      <HasNode Condition=" '$(NodeExit)' == '0' and '$(NpmExit)' == '0' ">true</HasNode>
+    </PropertyGroup>
+    <Message Importance="High" Text="Node present: $(HasNode)" />
+    <Exec Condition=" '$(HasNode)' == 'true' " Command="npm install" WorkingDirectory="$(MSBuildProjectDirectory)" ContinueOnError="true" />
+    <Exec Condition=" '$(HasNode)' == 'true' " Command="npm run build:css" WorkingDirectory="$(MSBuildProjectDirectory)" ContinueOnError="true" />
+  </Target>
+
+</Project>

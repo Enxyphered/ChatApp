@@ -1,0 +1,17 @@
+@inherits RazorSlice<MessageFormModel>
+<form id="message-form" hx-post="/send-message" hx-target="#af-token" hx-swap="outerHTML" hx-select="#af-token" hx-on::after-request="var msgInput = this.querySelector('input[name=message]'); msgInput.value = ''; msgInput.focus();">
+    <input id="af-token" type="hidden" name="@Model!.Tokens.FormFieldName" value="@Model.Tokens.RequestToken" />
+    <div class="row p-1">
+        <div class="col-1">User</div>
+        <div class="col-5"><input type="text" class="text-black" name="user" required /></div>
+    </div>
+    <div class="row p-1">
+        <div class="col-1">Message</div>
+        <div class="col-5"><input type="text" class="w-100 text-black" name="message" required /></div>
+    </div>
+    <div class="row p-1">
+        <div class="col-6 text-end">
+            <button type="submit">Send Message</button>
+        </div>
+    </div>
+</form>

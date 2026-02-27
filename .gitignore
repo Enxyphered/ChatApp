@@ -1,0 +1,34 @@
+# Build
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+pnpm-lock.yaml
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+project.lock.json
+*.snupkg
+.nuget/
+
+# Publish
+publish/
+
+# Secrets / env
+secrets.json
+.env
+.env.*

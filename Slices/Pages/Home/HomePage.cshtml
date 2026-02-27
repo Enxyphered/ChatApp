@@ -1,0 +1,21 @@
+@inherits RazorSlice<HomePageModel>
+@implements IUsesLayout<_Layout, LayoutModel>
+
+<div class="container" signalr-connect="/chathub">
+    @(await RenderPartialAsync<MessageForm, MessageFormModel>(new MessageFormModel(Model!.Tokens)))
+    <div class="row p-1">
+        <div class="col-6">
+            <hr />
+        </div>
+    </div>
+
+    <div class="row p-1">
+        <div class="col-6">
+            <ul id="messagesList" signalr-subscribe="ReceiveMessage" hx-swap="beforeend"></ul>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public LayoutModel LayoutModel => new("Home");
+}
